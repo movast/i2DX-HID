@@ -1,3 +1,11 @@
+HID Emulator
+=======
+Install the interception driver using "install-interception.exe /install"
+Compile the Interception library and the HIDEmulator project
+Run Launch.bat to run the original i2DX python server and the HIDEmulator.
+Python sends key instructions to the C++ application using the Open Sound Control protocol.
+
+ 
 * __Scroll Down__ for installation instructions (Windows and Mac OS X).
 * Go to [__Download Page__](https://github.com/dtinth/i2DX/downloads) to download latest version of i2DX.
 
