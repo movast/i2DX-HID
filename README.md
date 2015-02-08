@@ -6,7 +6,7 @@ The original i2DX repository available on [GitHub](https://github.com/dtinth/i2D
 Install instructions
 ------------
 * Install the interception driver using "install-interception.exe /install"
-* Install [__Python__](https://www.python.org/downloads/) (version 2.7.9 used during development), [__AutoPy__](http://pypi.python.org/pypi/autopy/), [__setuptools__](pypi.python.org/pypi/setuptools)
+* Install [__Python__](https://www.python.org/downloads/) (version 2.7.9 used during development), [__AutoPy__](http://pypi.python.org/pypi/autopy/), [__setuptools__](http://pypi.python.org/pypi/setuptools)
 * Install [__tornado__](https://pypi.python.org/pypi/tornado) and [__pyOSC__](https://trac.v2.nl/wiki/pyOSC) using the following commands:
 
     `C:\Python27\Scripts\easy_install tornado`
