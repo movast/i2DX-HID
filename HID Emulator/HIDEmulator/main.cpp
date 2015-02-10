@@ -5,7 +5,9 @@
 //
 
 #define OSCPKT_OSTREAM_OUTPUT
+extern "C" {
 #include <interception.h>
+}
 #include "utils.h"
 #include <iostream>
 #include "oscpkt.hh"
