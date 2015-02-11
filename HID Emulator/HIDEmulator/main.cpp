@@ -25,6 +25,7 @@ const int PORT_NUM = 57120;
 
 enum ScanCode
 {
+	// Player 1
 	SCANCODE_Z = 0x2c,
 	SCANCODE_S = 0x1f,
 	SCANCODE_X = 0x2D,
@@ -33,7 +34,17 @@ enum ScanCode
 	SCANCODE_F = 0x21,
 	SCANCODE_V = 0x2f,
 	SCANCODE_BRACKET_OPEN = 0x1a,
-	SCANCODE_QUOTATIONMARK = 0x28
+	SCANCODE_QUOTATIONMARK = 0x28,
+	// Player 2
+	SCANCODE_M = 0x32,
+	SCANCODE_K = 0x25,
+	SCANCODE_COMMA = 0x33,
+	SCANCODE_L = 0x26,
+	SCANCODE_DOT = 0x34,
+	SCANCODE_SEMICOLON = 0x27,
+	SCANCODE_FORWARDSLASH = 0x35,
+	SCANCODE_BRACKET_CLOSE=0x1b,
+	SCANCODE_HASH = 0x2b
 };
 
 // Thread that passes through keyboard input
@@ -73,43 +84,44 @@ int main()
 				pr.init(sock.packetData(), sock.packetSize());
 				oscpkt::Message *msg;
 				while (pr.isOk() && (msg = pr.popMessage()) != 0) {
-					int iarg;
+					int state;
+					string player;
 					cout << "Server: received message " << msg->addressPattern() <<" from " << sock.packetOrigin() << "\n";
-					if (msg->match("/iidx_1").popInt32(iarg).isOkNoMoreArgs()) {
-						stroke.code = SCANCODE_Z;
-						stroke.state = iarg == 1 ? 0x00 : 0x01;
+					if (msg->match("/iidx_1").popInt32(state).popStr(player).isOkNoMoreArgs()) {
+						stroke.code = player == "1"? SCANCODE_Z : SCANCODE_M;
+						stroke.state = state == 1 ? 0x00 : 0x01;
 					}
-					else if (msg->match("/iidx_2").popInt32(iarg).isOkNoMoreArgs()) {
-						stroke.code = SCANCODE_S;
-						stroke.state = iarg == 1 ? 0x00 : 0x01;
+					else if (msg->match("/iidx_2").popInt32(state).popStr(player).isOkNoMoreArgs()) {
+						stroke.code = player == "1"? SCANCODE_S : SCANCODE_K;
+						stroke.state = state == 1 ? 0x00 : 0x01;
 					}
-					else if (msg->match("/iidx_3").popInt32(iarg).isOkNoMoreArgs()) {
-						stroke.code = SCANCODE_X;
-						stroke.state = iarg == 1 ? 0x00 : 0x01;
+					else if (msg->match("/iidx_3").popInt32(state).popStr(player).isOkNoMoreArgs()) {
+						stroke.code = player == "1"? SCANCODE_X : SCANCODE_COMMA;
+						stroke.state = state == 1 ? 0x00 : 0x01;
 					}
-					else if (msg->match("/iidx_4").popInt32(iarg).isOkNoMoreArgs()) {
-						stroke.code = SCANCODE_D;
-						stroke.state = iarg == 1 ? 0x00 : 0x01;
+					else if (msg->match("/iidx_4").popInt32(state).popStr(player).isOkNoMoreArgs()) {
+						stroke.code = player == "1"? SCANCODE_D : SCANCODE_L;
+						stroke.state = state == 1 ? 0x00 : 0x01;
 					}
-					else if (msg->match("/iidx_5").popInt32(iarg).isOkNoMoreArgs()) {
-						stroke.code = SCANCODE_C;
-						stroke.state = iarg == 1 ? 0x00 : 0x01;
+					else if (msg->match("/iidx_5").popInt32(state).popStr(player).isOkNoMoreArgs()) {
+						stroke.code = player == "1"? SCANCODE_C : SCANCODE_DOT;
+						stroke.state = state == 1 ? 0x00 : 0x01;
 					}
-					else if (msg->match("/iidx_6").popInt32(iarg).isOkNoMoreArgs()) {
-						stroke.code = SCANCODE_F;
-						stroke.state = iarg == 1 ? 0x00 : 0x01;
+					else if (msg->match("/iidx_6").popInt32(state).popStr(player).isOkNoMoreArgs()) {
+						stroke.code = player == "1"? SCANCODE_F : SCANCODE_SEMICOLON;
+						stroke.state = state == 1 ? 0x00 : 0x01;
 					}
-					else if (msg->match("/iidx_7").popInt32(iarg).isOkNoMoreArgs()) {
-						stroke.code = SCANCODE_V;
-						stroke.state = iarg == 1 ? 0x00 : 0x01;
+					else if (msg->match("/iidx_7").popInt32(state).popStr(player).isOkNoMoreArgs()) {
+						stroke.code = player == "1"? SCANCODE_V : SCANCODE_FORWARDSLASH;
+						stroke.state = state == 1 ? 0x00 : 0x01;
 					}
-					else if (msg->match("/turntable_cw").popInt32(iarg).isOkNoMoreArgs()) {
-						stroke.code = SCANCODE_BRACKET_OPEN;
-						stroke.state = iarg == 1 ? 0x00 : 0x01;
+					else if (msg->match("/turntable_cw").popInt32(state).popStr(player).isOkNoMoreArgs()) {
+						stroke.code = player == "1"? SCANCODE_BRACKET_OPEN: SCANCODE_BRACKET_CLOSE;
+						stroke.state = state == 1 ? 0x00 : 0x01;
 					}
-					else if (msg->match("/turntable_ccw").popInt32(iarg).isOkNoMoreArgs()) {
-						stroke.code = SCANCODE_QUOTATIONMARK;
-						stroke.state = iarg == 1 ? 0x00 : 0x01;
+					else if (msg->match("/turntable_ccw").popInt32(state).popStr(player).isOkNoMoreArgs()) {
+						stroke.code = player == "1" ? SCANCODE_QUOTATIONMARK: SCANCODE_HASH;
+						stroke.state = state == 1 ? 0x00 : 0x01;
 					}
 					else {
 						cout << "Server: unhandled message: " << *msg << "\n";

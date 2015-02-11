@@ -13,7 +13,7 @@ i2DX.Application = function() {
 	this._layout = i2DX.getParam('layout');
 
 	this._ui = new i2DX.ui.UI();
-	this._ui.setDefaultPlayer(1);
+	this._ui.setDefaultPlayer(i2DX.getParam('player'));
 
 	document.body.className = 'layout-' + this._layout;
 	document.title = this._layout;

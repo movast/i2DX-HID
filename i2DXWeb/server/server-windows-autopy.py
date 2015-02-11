@@ -16,6 +16,7 @@ class I2DXWebSocketAutoPy(libi2dx.I2DXWebSocket):
 			msg = OSC.OSCMessage()
 			msg.setAddress(("/%s"% key_id))
 			msg.append(1 if state else 0)
+			msg.append(player)
 			print msg;
 			client.send(msg)
 		except ConfigParser.NoOptionError:
